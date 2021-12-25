@@ -211,8 +211,7 @@
   (add-hook 'inferior-hy-mode-hook
             (lambda ()
               (paredit-mode 1)
-              (company-mode 1)
-              (add-to-list 'company-backends '(company-hy company-dabbrev-code)))))
+              (company-mode 1))))
 
 
 
