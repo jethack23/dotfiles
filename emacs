@@ -25,6 +25,8 @@
 (xterm-mouse-mode t)
 
 
+(global-unset-key "\C-z")
+(global-set-key "\C-z" 'advertised-undo)
 
 ;;themes
 (use-package vscode-dark-plus-theme
@@ -79,10 +81,12 @@
 
 
 ;; python
-(use-package pyvenv
+(use-package conda
+  :ensure t
   :init
-  (setenv "WORKON_HOME" (getenv "CONDA_ENVS"))
-  (pyvenv-mode 1))
+  (setq conda-anaconda-home (expand-file-name "c:/ProgramData/Miniconda3"))
+  (setq conda-env-home-directory (expand-file-name "c:/users/user/.conda"))
+  (conda-env-autoactivate-mode t))
 
 (use-package lsp-python-ms
   :ensure t
@@ -201,9 +205,11 @@
   :config
   (add-hook 'hy-mode-hook
             (lambda ()
-              (global-set-key (kbd "C-c C-c") 'hy-shell-eval-buffer)
-              (global-set-key (kbd "C-c C-r") 'hy-shell-eval-region)
-              (global-set-key (kbd "C-x C-e") 'hy-shell-eval-last-sexp)
+              (paredit-mode 1)
+              (company-mode 1)
+              (add-to-list 'company-backends '(company-hy company-dabbrev-code))))
+  (add-hook 'inferior-hy-mode-hook
+            (lambda ()
               (paredit-mode 1)
               (company-mode 1)
               (add-to-list 'company-backends '(company-hy company-dabbrev-code)))))
@@ -232,8 +238,8 @@
 
 (use-package multiple-cursors
   :config
-  (global-set-key (kbd "C-M-N") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-M-P") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "M-n") 'mc/mark-next-like-this)
+  (global-set-key (kbd "M-p") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-M-L") 'mc/mark-all-like-this)
   )
 
@@ -242,7 +248,7 @@
 (show-paren-mode 1) ;;show paren mode
 (setq show-paren-delay 0)
 (setq inhibit-startup-screen t) ;;skip startup screen and specify default mode
-(setq initial-major-mode 'python-mode)
+(setq initial-major-mode 'hy-mode)
 (setq initial-scratch-message "")
 (display-time) ;;show time on status bar
 (transient-mark-mode t) ;; show selected area
@@ -271,7 +277,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono Derivative Powerline" :foundry "unknown" :slant normal :weight normal :height 130 :width normal)))))
+ '(default ((t (:family "Ubuntu Mono Derivative Powerline" :foundry "unknown" :slant normal :weight normal :height 138 :width normal)))))
 
 ;;korean environment
 (set-language-environment "Korean")
@@ -282,5 +288,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (vscode-dark-plus-theme conda multiple-cursors python-black py-isort rainbow-delimiters hy-mode racket-mode paredit helm company color-theme-sanityinc-tomorrow use-package))))
+   '(cider clojure-mode spinner vscode-dark-plus-theme conda multiple-cursors python-black py-isort rainbow-delimiters hy-mode racket-mode paredit helm company color-theme-sanityinc-tomorrow use-package)))
