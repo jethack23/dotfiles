@@ -86,7 +86,7 @@
   :init
   (setq conda-anaconda-home (expand-file-name "c:/ProgramData/Miniconda3"))
   (setq conda-env-home-directory (expand-file-name "c:/users/user/.conda"))
-  (conda-env-autoactivate-mode t))
+  (conda-env-activate "base"))
 
 (use-package lsp-python-ms
   :ensure t
