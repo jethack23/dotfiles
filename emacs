@@ -84,8 +84,8 @@
 (use-package conda
   :ensure t
   :init
-  (setq conda-anaconda-home (expand-file-name "c:/ProgramData/Miniconda3"))
-  (setq conda-env-home-directory (expand-file-name "c:/users/user/.conda"))
+  (setq conda-anaconda-home (expand-file-name "~/miniconda3"))
+  (setq conda-env-home-directory (expand-file-name "~/miniconda3/envs/"))
   (conda-env-activate "base"))
 
 (use-package lsp-python-ms
@@ -195,7 +195,7 @@
                                       "-mode-hook"))))
             (add-hook hook (lambda () (paredit-mode 1)))
             (add-hook hook (lambda () (electric-pair-mode nil)))))
-        '(emacs-lisp inferior-lisp slime lisp-interaction scheme racket clojure)))
+        '(emacs-lisp inferior-lisp slime lisp-interaction scheme racket clojure hy inferior-hy)))
 
 ;;racket
 (use-package racket-mode)
@@ -205,20 +205,25 @@
   :config
   (add-hook 'hy-mode-hook
             (lambda ()
-              (paredit-mode 1)
               (company-mode 1)
               (add-to-list 'company-backends '(company-hy company-dabbrev-code))))
   (add-hook 'inferior-hy-mode-hook
             (lambda ()
-              (paredit-mode 1)
               (company-mode 1))))
 
 
 
-;;rainbow-delimiters
-(use-package rainbow-delimiters
+;; rainbow-delimiters
+(use-package rainbow-delimiters)
+
+;;; paren-face
+(use-package paren-face
   :config
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  (mapc (lambda (mode)
+          (let ((hook (intern (concat (symbol-name mode)
+                                      "-mode-hook"))))
+            (add-hook hook (lambda () (paren-face-mode 1)))))
+        '(emacs-lisp inferior-lisp slime lisp-interaction scheme racket clojure hy inferior-hy)))
 
 
 ;;isort and black formatting
@@ -287,4 +292,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(cider clojure-mode spinner vscode-dark-plus-theme conda multiple-cursors python-black py-isort rainbow-delimiters hy-mode racket-mode paredit helm company color-theme-sanityinc-tomorrow use-package)))
+   (quote
+    (paren-face dash cider clojure-mode spinner vscode-dark-plus-theme conda multiple-cursors python-black py-isort rainbow-delimiters hy-mode racket-mode paredit helm company color-theme-sanityinc-tomorrow use-package))))
