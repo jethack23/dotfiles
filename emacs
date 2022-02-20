@@ -216,16 +216,6 @@
 ;; rainbow-delimiters
 (use-package rainbow-delimiters)
 
-;;; paren-face
-(use-package paren-face
-  :config
-  (mapc (lambda (mode)
-          (let ((hook (intern (concat (symbol-name mode)
-                                      "-mode-hook"))))
-            (add-hook hook (lambda () (paren-face-mode 1)))))
-        '(emacs-lisp inferior-lisp slime lisp-interaction scheme racket clojure hy inferior-hy)))
-
-
 ;;isort and black formatting
 (use-package py-isort
   :init
@@ -281,7 +271,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono Derivative Powerline" :foundry "unknown" :slant normal :weight normal :height 138 :width normal)))))
+ '(default ((t (:family "Ubuntu Mono Derivative Powerline" :foundry "unknown" :slant normal :weight normal :height 138 :width normal))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#887200"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "#6e396c"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#3f6176"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "#887200"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "#6e396c"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "#3f6176"))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "#887200"))))
+ '(rainbow-delimiters-depth-8-face ((t (:foreground "#6e396c"))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "#3f6176")))))
 
 ;;korean environment
 (set-language-environment "Korean")
