@@ -85,7 +85,7 @@
   :ensure t
   :init
   (setq conda-anaconda-home (expand-file-name "~/miniconda3"))
-  (setq conda-env-home-directory (expand-file-name "~/miniconda3/envs/"))
+  (setq conda-env-home-directory (expand-file-name "~/miniconda3"))
   (conda-env-activate "base"))
 
 (use-package lsp-python-ms
@@ -214,7 +214,9 @@
 
 
 ;; rainbow-delimiters
-(use-package rainbow-delimiters)
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 ;;isort and black formatting
 (use-package py-isort
