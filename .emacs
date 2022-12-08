@@ -7,23 +7,50 @@
 ;; (add-to-list 'default-frame-alist '(width . 85))
 ;; (set-frame-position (selected-frame) 0 0)
 
+;;; straight.el
+(setq package-enable-at-startup nil)
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+(straight-use-package 'use-package)
+(use-package straight
+  :custom (straight-use-package-by-default t))
+
 ;;melpa settings
-(require 'package) ;; You might already have this line
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-(package-initialize) ;; You might already have this line
+;; (require 'package) ;; You might already have this line
+;; (add-to-list 'package-archives
+;;              '("melpa" . "https://melpa.org/packages/"))
+;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+;; (package-initialize) ;; You might already have this line
 
 ;; for use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; (unless (package-installed-p 'use-package)
+;;   (package-refresh-contents)
+;;   (package-install 'use-package))
 
-(require 'use-package-ensure)
-(setq use-package-always-ensure t) ;;when package install need
+;; (require 'use-package-ensure)
+;; (setq use-package-always-ensure t) ;;when package install need
+
 
 (xterm-mouse-mode t)
+(global-set-key [mouse-4] 'scroll-down-line)
+(global-set-key [mouse-5] 'scroll-up-line)
 
+;;; I prefer cmd key for meta
+(setq mac-option-key-is-meta nil
+      mac-command-key-is-meta t
+      mac-command-modifier 'meta
+      mac-option-modifier 'none)
 
 (global-unset-key "\C-z")
 (global-set-key "\C-z" 'advertised-undo)
@@ -41,15 +68,15 @@
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
   (setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      treemacs-space-between-root-nodes nil
-      company-idle-delay 0.0
-      company-minimum-prefix-length 1
-      lsp-lens-enable t
-      lsp-signature-auto-activate nil
-      ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
-      ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
-      )
+        read-process-output-max (* 1024 1024)
+        treemacs-space-between-root-nodes nil
+        company-idle-delay 0.0
+        company-minimum-prefix-length 1
+        lsp-lens-enable t
+        lsp-signature-auto-activate nil
+                                        ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
+                                        ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
+        )
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          (clojure-mode . lsp)
          (clojurescript-mode . lsp)
@@ -88,15 +115,21 @@
   (setq conda-env-home-directory (expand-file-name "~/miniconda3"))
   ;; (setq conda-anaconda-home (expand-file-name "c:/ProgramData/Miniconda3"))
   ;; (setq conda-env-home-directory (expand-file-name "c:/users/user/.conda/"))
-  (conda-env-activate "base"))
+  ;; (conda-env-activate "base")
+  )
 
-(use-package lsp-python-ms
+;;; lsp-pyright
+(use-package lsp-pyright
   :ensure t
-  :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
+                         (require 'lsp-pyright)
                          (lsp))))  ; or lsp-deferred
 
+;;; company-jedi
+(use-package company-jedi
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (add-to-list 'company-backends 'company-jedi))))
 
 
 ;; treemacs
@@ -204,6 +237,7 @@
 
 ;;hylang settings
 (use-package hy-mode
+  :straight (hy-mode :type git :host github :repo "jethack23/hy-mode")
   :config
   (add-hook 'hy-mode-hook
             (lambda ()
@@ -275,7 +309,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono Derivative Powerline" :foundry "unknown" :slant normal :weight normal :height 138 :width normal))))
+ '(default ((t (:family "Ubuntu Mono Derivative Powerline" :foundry "unknown" :slant normal :weight normal :height 160 :width normal))))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "#887200"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "#6e396c"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "#3f6176"))))
@@ -295,5 +329,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (paren-face dash cider clojure-mode spinner vscode-dark-plus-theme conda multiple-cursors python-black py-isort rainbow-delimiters hy-mode racket-mode paredit helm company color-theme-sanityinc-tomorrow use-package))))
+   '(company-jedi paren-face dash cider clojure-mode spinner vscode-dark-plus-theme conda multiple-cursors python-black py-isort rainbow-delimiters hy-mode racket-mode paredit helm company color-theme-sanityinc-tomorrow use-package)))
