@@ -56,10 +56,34 @@
 (global-set-key "\C-z" 'advertised-undo)
 
 ;;themes
-(use-package vscode-dark-plus-theme
+;; (use-package vscode-dark-plus-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'vscode-dark-plus t)
+;;   (custom-set-faces
+;;    '(rainbow-delimiters-depth-1-face ((t (:foreground "#887200"))))
+;;    '(rainbow-delimiters-depth-2-face ((t (:foreground "#6e396c"))))
+;;    '(rainbow-delimiters-depth-3-face ((t (:foreground "#3f6176"))))
+;;    '(rainbow-delimiters-depth-4-face ((t (:foreground "#887200"))))
+;;    '(rainbow-delimiters-depth-5-face ((t (:foreground "#6e396c"))))
+;;    '(rainbow-delimiters-depth-6-face ((t (:foreground "#3f6176"))))
+;;    '(rainbow-delimiters-depth-7-face ((t (:foreground "#887200"))))
+;;    '(rainbow-delimiters-depth-8-face ((t (:foreground "#6e396c"))))
+;;    '(rainbow-delimiters-depth-9-face ((t (:foreground "#3f6176"))))))
+(use-package github-modern-theme
   :ensure t
   :config
-  (load-theme 'vscode-dark-plus t))
+  (load-theme 'github-modern t)
+  (custom-set-faces
+   '(rainbow-delimiters-depth-1-face ((t (:foreground "#c9a902"))))
+   '(rainbow-delimiters-depth-2-face ((t (:foreground "#bf62bc"))))
+   '(rainbow-delimiters-depth-3-face ((t (:foreground "#70b2db"))))
+   '(rainbow-delimiters-depth-4-face ((t (:foreground "#c9a902"))))
+   '(rainbow-delimiters-depth-5-face ((t (:foreground "#bf62bc"))))
+   '(rainbow-delimiters-depth-6-face ((t (:foreground "#70b2db"))))
+   '(rainbow-delimiters-depth-7-face ((t (:foreground "#c9a902"))))
+   '(rainbow-delimiters-depth-8-face ((t (:foreground "#bf62bc"))))
+   '(rainbow-delimiters-depth-9-face ((t (:foreground "#70b2db"))))))
 
 
 ;; lsp-mode
@@ -309,16 +333,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono Derivative Powerline" :foundry "unknown" :slant normal :weight normal :height 160 :width normal))))
- '(rainbow-delimiters-depth-1-face ((t (:foreground "#887200"))))
- '(rainbow-delimiters-depth-2-face ((t (:foreground "#6e396c"))))
- '(rainbow-delimiters-depth-3-face ((t (:foreground "#3f6176"))))
- '(rainbow-delimiters-depth-4-face ((t (:foreground "#887200"))))
- '(rainbow-delimiters-depth-5-face ((t (:foreground "#6e396c"))))
- '(rainbow-delimiters-depth-6-face ((t (:foreground "#3f6176"))))
- '(rainbow-delimiters-depth-7-face ((t (:foreground "#887200"))))
- '(rainbow-delimiters-depth-8-face ((t (:foreground "#6e396c"))))
- '(rainbow-delimiters-depth-9-face ((t (:foreground "#3f6176")))))
+ '(default ((t (:family "Ubuntu Mono Derivative Powerline" :foundry "unknown" :slant normal :weight normal :height 160 :width normal)))))
 
 ;;korean environment
 (set-language-environment "Korean")
